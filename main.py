@@ -39,25 +39,34 @@ twitch_miner = TwitchChannelPointsMiner(
         emoji=True,                             # On Windows, we have a problem printing emoji. Set to false if you have a problem
         less=False,                             # If you think that the logs are too verbose, set this to True
         colored=True,                           # If you want to print colored text
-        color_palette=ColorPalette(             # You can also create a custom palette color (for the common message).
-            STREAMER_online="GREEN",            # Don't worry about lower/upper case. The script will parse all the values.
-            streamer_offline="red",             # Read more in README.md
-            BET_wiN=Fore.MAGENTA                # Color allowed are: [BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, RESET].
+        color_palette=ColorPalette(
+            STREAMER_ONLINE = Fore.GREEN,
+            STREAMER_OFFLINE = Fore.RED,
+            GAIN_FOR_RAID = Fore.YELLOW,
+            GAIN_FOR_CLAIM = Fore.MAGENTA,
+            GAIN_FOR_WATCH = Fore.BLUE,
+            GAIN_FOR_WATCH_STREAK = Fore.YELLOW,
+            BET_WIN = Fore.GREEN,
+            BET_LOSE = Fore.RED,
+            BET_REFUND = Fore.RESET,
+            BET_FILTERS = Fore.MAGENTA,
+            BET_GENERAL = Fore.BLUE,
+            BET_FAILED = Fore.RED,
         ),
         telegram=Telegram(                                                          # You can omit or set to None if you don't want to receive updates on Telegram
             chat_id=123456789,                                                      # Chat ID to send messages @getmyid_bot
             token="123456789:shfuihreuifheuifhiu34578347",                          # Telegram API token @BotFather
             events=[Events.STREAMER_ONLINE, Events.STREAMER_OFFLINE,
-                    Events.BET_LOSE, Events.CHAT_MENTION],                          # Only these events will be sent to the chat
+                    Events.BET_LOSE],                                               # Only these events will be sent to the chat
             disable_notification=True,                                              # Revoke the notification (sound/vibration)
         ),
         discord=Discord(
-            webhook_api="https://discord.com/api/webhooks/0123456789/0a1B2c3D4e5F6g7H8i9J",  # Discord Webhook URL
+            webhook_api=os.environ.get('webhook_api'),                                 # Discord Webhook URL
             events=[Events.STREAMER_ONLINE, Events.STREAMER_OFFLINE,
-                    Events.BET_LOSE, Events.CHAT_MENTION],                                  # Only these events will be sent to the chat
+                    Events.BET_LOSE],                                                  # Only these events will be sent to the chat
         ),
         matrix=Matrix(
-            username="twitch_miner",                                                   # Matrix username (without homeserver)
+            username="",                                                               # Matrix username (without homeserver)
             password="...",                                                            # Matrix password
             homeserver="matrix.org",                                                   # Matrix homeserver
             room_id="...",                                                             # Room ID
